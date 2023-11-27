@@ -4,7 +4,7 @@ import { storage } from '../App';
 
 export const useAxios = () => {
     const axiosClient = axios.create({
-        baseURL: '10.0.2.2:8080',
+        baseURL: 'http://10.0.2.2:8080',
     });
 
     const token = useMMKVStorage('token', storage, null);
