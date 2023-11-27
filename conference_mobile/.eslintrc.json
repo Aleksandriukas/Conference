@@ -1,0 +1,21 @@
+{
+  "root": true,
+  "extends": "../../.eslintrc.json",
+  "overrides": [
+    {
+      "files": ["*.js"],
+      "env": {
+        "node": true,
+        "commonjs": true
+      },
+      "parserOptions": {
+        "sourceType": "script"
+      },
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off"
+      }
+    }
+  ],
+  "plugins": ["react-native", "@react-native-community"],
+  "rules": {}
+}
