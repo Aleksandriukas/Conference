@@ -1,15 +1,19 @@
 import { useState } from 'react';
-import { PaperProvider } from 'react-native-paper';
+import { PaperProvider, MD3Colors } from 'react-native-paper';
 import { AppContext } from './AppContext';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Main } from './main/Main';
 import { Auth } from './auth/Auth';
+import { MMKVLoader, useMMKVStorage } from 'react-native-mmkv-storage';
 
 const Stack = createNativeStackNavigator();
 
+export const storage = new MMKVLoader().initialize();
 export default function App() {
     const [isLogged, setIsLogged] = useState(false);
+
+    const [token, setToken] = useState('');
 
     return (
         <PaperProvider>

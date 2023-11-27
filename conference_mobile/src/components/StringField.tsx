@@ -5,7 +5,7 @@ export type FieldState = {
     value: string;
 };
 
-type StringFieldProps = {
+export type StringFieldProps = {
     state: [FieldState, React.Dispatch<React.SetStateAction<FieldState>>];
     inputProps?: TextInputProps;
 };
