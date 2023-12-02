@@ -20,8 +20,9 @@ export const Registration = () => {
     const axiosClient = useAxios();
 
     const onRegistration = async () => {
+        console.log('request');
         axiosClient
-            .post('/auth/register', {
+            .post('/api/register', {
                 name: name[0].value,
                 email: email[0].value,
                 password: password[0].value,

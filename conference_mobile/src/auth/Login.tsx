@@ -4,13 +4,22 @@ import { View, StyleSheet, TouchableWithoutFeedback, Keyboard, TouchableOpacity 
 import { Button, Text, MD3Colors } from 'react-native-paper';
 import { FieldState, StringField } from '../components/StringField';
 import { PasswordField } from '../components/PasswordField';
-import { Auth } from '../services/BaseUrl';
-import axiosClient from '../axios-client';
+import { useAxios } from '../services/useAxios';
 
 export const Login = () => {
+    const axiosClient = useAxios();
+
     const onLogin = async () => {
         try {
-            //
+            console.log('request');
+            const data = axiosClient
+                .post('api/login', {
+                    email: email[0].value,
+                    password: password[0].value,
+                })
+                .then((response) => {
+                    console.log(response.data);
+                });
         } catch (error) {
             console.log(error);
         }

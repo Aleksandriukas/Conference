@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
@@ -10,10 +9,13 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
+
     public function login(LoginRequest $request)
     {
         $credentials = $request->validated();
 
+
+        console.log('credentials', $credentials);
         if(Auth::attempt(['email' => $email, 'password' => $password])){
             return response(['message' => 'Invalid credentials'], 401);
         }
@@ -31,12 +33,11 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $date['name'],
             'email' => $date['email'],
-            'password' => bcrypt::make($date['password'])
+            'password' => $date['password'],
         ]);
     
-        $token = $user->createToken('main')->plainTextToken;
     
-       return response(compact('user','token'));
+       return response(['messege' => 'User created successfully'], 201);
         
     }
 
