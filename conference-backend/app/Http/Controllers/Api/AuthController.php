@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -14,16 +15,17 @@ class AuthController extends Controller
     {
         $credentials = $request->validated();
 
-
-        console.log('credentials', $credentials);
-        if(Auth::attempt(['email' => $email, 'password' => $password])){
-            return response(['message' => 'Invalid credentials'], 401);
+        if (!Auth::attempt($credentials)) {
+            return response([
+                'message' => 'Provided email or password is incorrect'
+            ], 422);
         }
+
         /** @var User $user  */
         $user = Auth::user();
         $token = $user->createToken('main')->plainTextToken;
 
-        return response(compact('user','token'));
+        return response(compact('user','token'),200);
         
     }
     

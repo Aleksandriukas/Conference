@@ -1,5 +1,5 @@
 import { Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
-import { Appbar, Button } from 'react-native-paper';
+import { Appbar, Button, MD3Colors } from 'react-native-paper';
 import App, { storage } from '../App';
 import { useNavigation } from '@react-navigation/native';
 import { FieldState, StringField } from '../components/StringField';
@@ -45,7 +45,7 @@ export const Registration = () => {
             }}
         >
             <View>
-                <Appbar.Header style={{ backgroundColor: undefined }}>
+                <Appbar.Header style={{ backgroundColor: MD3Colors.primary95 }}>
                     <Appbar.BackAction onPress={goBack} />
                     <Appbar.Content title="Registration" />
                 </Appbar.Header>

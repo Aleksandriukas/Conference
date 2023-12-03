@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PaperProvider, MD3Colors } from 'react-native-paper';
 import { AppContext } from './AppContext';
 import { NavigationContainer } from '@react-navigation/native';
@@ -13,7 +13,16 @@ export const storage = new MMKVLoader().initialize();
 export default function App() {
     const [isLogged, setIsLogged] = useState(false);
 
-    const [token, setToken] = useState('');
+    useEffect(() => {
+        storage.getItem('token').then((token) => {
+            console.log(token);
+            if (Boolean(token)) {
+                setIsLogged(true);
+            } else {
+                setIsLogged(false);
+            }
+        });
+    }, []);
 
     return (
         <PaperProvider>

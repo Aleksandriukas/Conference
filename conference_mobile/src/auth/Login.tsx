@@ -1,13 +1,17 @@
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { View, StyleSheet, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from 'react-native';
 import { Button, Text, MD3Colors } from 'react-native-paper';
 import { FieldState, StringField } from '../components/StringField';
 import { PasswordField } from '../components/PasswordField';
 import { useAxios } from '../services/useAxios';
+import { storage } from '../App';
+import { AppContext } from '../AppContext';
 
 export const Login = () => {
     const axiosClient = useAxios();
+
+    const { setIsLogged } = useContext(AppContext);
 
     const onLogin = async () => {
         try {
@@ -18,7 +22,10 @@ export const Login = () => {
                     password: password[0].value,
                 })
                 .then((response) => {
-                    console.log(response.data);
+                    storage.setItem('token', response.data.token);
+                    if (response.status === 200) {
+                        setIsLogged(true);
+                    }
                 });
         } catch (error) {
             console.log(error);
