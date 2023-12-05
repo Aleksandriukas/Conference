@@ -22,6 +22,7 @@ class UpdateConferencesRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'id'=> 'required',
             'conference_name' => 'required|string|max:255',
             'conference_description' => 'required|string|max:255',
             'conference_start_date' => 'required|date',

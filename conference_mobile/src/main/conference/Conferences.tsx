@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAxios } from '../../services/useAxios';
 import { ConferenceBean } from '../../beans/Conference';
-import { StyleSheet, View, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList, Alert } from 'react-native';
 import { Appbar, Button, MD3Colors, Text } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { ConferenceItem } from '../../components/ConferenceItem';
@@ -26,7 +26,8 @@ export const Conferences = () => {
                     setRefreshing(false);
                 });
         } catch (error) {
-            console.log(error);
+            // TODO: create popup
+            Alert.alert('Error', error.response.data.message);
         }
     };
 
@@ -51,7 +52,7 @@ export const Conferences = () => {
                     return (
                         <ConferenceItem
                             onPress={() => {
-                                navigate('EditConferenceForm', { params: { conference: item } });
+                                navigate('ConferenceView', { params: { conference: item } });
                             }}
                             conference={item}
                             key={item.id}

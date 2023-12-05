@@ -45,7 +45,7 @@ class ConferencesController extends Controller
      * @param \App\Models\Conferences                     $conferences
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateConferencesRequest $request, Conferences $conferences)
+    public function update(UpdateConferencesRequest $request)
     {
         $data = $request->validated();
 
@@ -53,18 +53,20 @@ class ConferencesController extends Controller
      \Log::info('Validated Data:', $data);
 
 
-        $conferences->update($data);
+        $model = Conferences::where('id', $data['id'])->first();
+        $model->update($data);
 
-        return new ConferenceResource($conferences);
+        return new response("",200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Conferences $conferences)
+    public function destroy($id)
     {
-        $conferences->delete();
+        $model = Conferences::where('id', $id)->first();
+        $model->delete();
 
-        return response("", 204);
+        return response("", 200);
     }
 }

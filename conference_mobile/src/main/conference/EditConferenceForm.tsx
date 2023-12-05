@@ -12,11 +12,10 @@ import { TouchableWithoutFeedback } from 'react-native';
 import dayjs from 'dayjs';
 import { useAxios } from '../../services/useAxios';
 import { ConferenceBean } from '../../beans/Conference';
+import { Alert } from 'react-native';
 
 export const EditConferenceForm = ({ route }) => {
-    const { goBack } = useNavigation();
-
-    console.log(route.params?.params.conference);
+    const { goBack, navigate } = useNavigation();
 
     const initialData: ConferenceBean | null = route.params?.params.conference;
 
@@ -41,11 +40,27 @@ export const EditConferenceForm = ({ route }) => {
         };
 
         if (initialData) {
-            axiosClient.put(`api/conferences/${conference.id}`, conference).then((response) => {});
+            axiosClient
+                .put(`api/conferences/${conference.id}`, conference)
+                .then((response) => {
+                    navigate('Conferences');
+                })
+                .catch((error) => {
+                    // TODO: create popup
+                    Alert.alert('Error', error.response.data.message);
+                });
             return;
         }
 
-        axiosClient.post('api/conferences', conference).then((response) => {});
+        axiosClient
+            .post('api/conferences', conference)
+            .then((response) => {
+                navigate('Conferences');
+            })
+            .catch((error) => {
+                // TODO: create popup
+                Alert.alert('Error', error.response.data.message);
+            });
     };
 
     return (
@@ -57,7 +72,7 @@ export const EditConferenceForm = ({ route }) => {
             <View style={{ flex: 1 }}>
                 <Appbar.Header style={{ backgroundColor: undefined }}>
                     <Appbar.BackAction onPress={goBack} />
-                    <Appbar.Content title="Registration" />
+                    <Appbar.Content title="Conference form" />
                 </Appbar.Header>
                 <View style={styles.container}>
                     <StringField state={conferenceName} inputProps={{ label: 'Name' }} />

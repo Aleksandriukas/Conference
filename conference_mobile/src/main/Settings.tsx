@@ -37,5 +37,6 @@ export const Settings = () => {
 const styles = StyleSheet.create({
     logoutBtn: {
         alignSelf: 'flex-start',
+        margin: 8,
     },
 });

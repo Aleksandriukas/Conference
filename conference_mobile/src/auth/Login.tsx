@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { useContext, useState } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, Keyboard, TouchableOpacity, Alert } from 'react-native';
 import { Button, Text, MD3Colors } from 'react-native-paper';
 import { FieldState, StringField } from '../components/StringField';
 import { PasswordField } from '../components/PasswordField';
@@ -29,6 +29,7 @@ export const Login = () => {
                 });
         } catch (error) {
             console.log(error);
+            Alert.alert('Error', error.response.data.message);
         }
     };
 

@@ -1,4 +1,4 @@
-import { Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { Alert, Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { Appbar, Button, MD3Colors } from 'react-native-paper';
 import App, { storage } from '../App';
 import { useNavigation } from '@react-navigation/native';
@@ -29,10 +29,11 @@ export const Registration = () => {
                 password_confirmation: confirmPassword[0].value,
             })
             .then((response) => {
-                console.log('success');
+                goBack();
             })
             .catch((error) => {
-                console.log(error);
+                // TODO: create popup
+                Alert.alert('Error', error.response.data.message);
             });
     };
 
