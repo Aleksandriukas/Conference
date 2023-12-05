@@ -11,26 +11,24 @@ import { AppContext } from '../AppContext';
 export const Login = () => {
     const axiosClient = useAxios();
 
-    const { setIsLogged } = useContext(AppContext);
+    const { setUserType } = useContext(AppContext);
 
     const onLogin = async () => {
-        try {
-            console.log('request');
-            const data = axiosClient
-                .post('api/login', {
-                    email: email[0].value,
-                    password: password[0].value,
-                })
-                .then((response) => {
-                    storage.setItem('token', response.data.token);
-                    if (response.status === 200) {
-                        setIsLogged(true);
-                    }
-                });
-        } catch (error) {
-            console.log(error);
-            Alert.alert('Error', error.response.data.message);
-        }
+        console.log('request');
+        const data = axiosClient
+            .post('api/login', {
+                email: email[0].value,
+                password: password[0].value,
+            })
+            .then((response) => {
+                storage.setItem('token', response.data.token);
+                if (response.status === 200) {
+                    setUserType('logged');
+                }
+            })
+            .catch((error) => {
+                Alert.alert('Error', error.response.data.message);
+            });
     };
 
     const { navigate } = useNavigation();
@@ -41,6 +39,10 @@ export const Login = () => {
 
     const onRegistration = () => {
         navigate('Registration');
+    };
+
+    const onContinueWithoutLogin = () => {
+        setUserType('nonAuth');
     };
 
     return (
@@ -56,7 +58,7 @@ export const Login = () => {
                 <View style={{ flex: 1, width: '100%', justifyContent: 'center' }}>
                     <StringField state={email} inputProps={{ label: 'Email' }} />
                     <PasswordField state={password} inputProps={{ label: 'Password' }} />
-                    <TouchableOpacity style={styles.touchableOpacity}>
+                    <TouchableOpacity onPress={onContinueWithoutLogin} style={styles.touchableOpacity}>
                         <Text style={styles.link}>Continue without login</Text>
                     </TouchableOpacity>
                     <Button

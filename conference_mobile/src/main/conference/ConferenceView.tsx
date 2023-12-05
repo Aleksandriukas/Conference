@@ -8,7 +8,7 @@ import { useAxios } from '../../services/useAxios';
 
 export const ConferenceView = ({ route }) => {
     const initialData: ConferenceBean | null = route.params?.params.conference;
-    const { isLogged } = useContext(AppContext);
+    const { userType } = useContext(AppContext);
 
     const { goBack, navigate } = useNavigation();
     const axiosClient = useAxios();
@@ -50,7 +50,7 @@ export const ConferenceView = ({ route }) => {
                     <Text variant="titleLarge">End:</Text>
                     <Text variant="bodyLarge">{initialData!.conference_end_date}</Text>
                 </View>
-                {isLogged && (
+                {userType === 'logged' && (
                     <View
                         style={{
                             flexDirection: 'row',

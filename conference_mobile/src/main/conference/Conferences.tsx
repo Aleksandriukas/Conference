@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useAxios } from '../../services/useAxios';
 import { ConferenceBean } from '../../beans/Conference';
 import { StyleSheet, View, FlatList, Alert } from 'react-native';
 import { Appbar, Button, MD3Colors, Text } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { ConferenceItem } from '../../components/ConferenceItem';
+import { AppContext } from '../../AppContext';
 
 export const Conferences = () => {
     const axiosClient = useAxios();
 
+    const { userType } = useContext(AppContext);
     const [data, setData] = useState<ConferenceBean[]>([]);
     const { navigate } = useNavigation();
 
@@ -61,9 +63,11 @@ export const Conferences = () => {
                     );
                 }}
             />
-            <Button onPress={onAdd} mode="contained" style={styles.addBtn}>
-                Add
-            </Button>
+            {userType === 'logged' && (
+                <Button onPress={onAdd} mode="contained" style={styles.addBtn}>
+                    Add
+                </Button>
+            )}
         </View>
     );
 };

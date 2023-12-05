@@ -15,14 +15,12 @@ use App\Http\Controllers\Api\ConferencesController;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/logout', [App\Http\Controllers\Api\AuthController::class, 'logout']);
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
-
-    Route::apiResource('/conferences', ConferencesController::class);
 });
 
+Route::apiResource('/conferences', ConferencesController::class);
 Route::post('/register', [App\Http\Controllers\Api\AuthController::class, 'register']);
 Route::post('/login', [App\Http\Controllers\Api\AuthController::class, 'login']);
-Route::post('/logout', [App\Http\Controllers\Api\AuthController::class, 'logout']);

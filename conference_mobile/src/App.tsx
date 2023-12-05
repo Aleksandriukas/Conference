@@ -11,25 +11,25 @@ const Stack = createNativeStackNavigator();
 
 export const storage = new MMKVLoader().initialize();
 export default function App() {
-    const [isLogged, setIsLogged] = useState(false);
+    const [userType, setUserType] = useState<'nonAuth' | 'logged' | undefined>(undefined);
 
     useEffect(() => {
         storage.getItem('token').then((token) => {
             console.log(token);
             if (Boolean(token)) {
-                setIsLogged(true);
+                setUserType('logged');
             } else {
-                setIsLogged(false);
+                setUserType(undefined);
             }
         });
     }, []);
 
     return (
         <PaperProvider>
-            <AppContext.Provider value={{ isLogged, setIsLogged }}>
+            <AppContext.Provider value={{ userType, setUserType }}>
                 <NavigationContainer>
                     <Stack.Navigator screenOptions={{ headerShown: false }}>
-                        {isLogged ? (
+                        {userType ? (
                             <Stack.Screen name="Main" component={Main} />
                         ) : (
                             <Stack.Screen name="Auth" component={Auth} />

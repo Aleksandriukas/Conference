@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import { Appbar, Button, MD3Colors } from 'react-native-paper';
 import { useAxios } from '../services/useAxios';
 import { storage } from '../App';
@@ -8,17 +8,20 @@ import { AppContext } from '../AppContext';
 export const Settings = () => {
     const axiosClient = useAxios();
 
-    const { setIsLogged } = useContext(AppContext);
+    const { userType, setUserType } = useContext(AppContext);
 
     const logout = () => {
         try {
-            console.log('request');
-            axiosClient.post('api/logout', {}).finally(() => {
-                storage.setItem('token', '');
-                setIsLogged(false);
-            });
+            if (userType === 'logged') {
+                axiosClient.post('api/logout', {}).finally(() => {
+                    storage.setItem('token', '');
+                });
+            }
         } catch (error) {
-            console.log(error);
+            // TODO: create popup
+            Alert.alert('Error', error.response.data.message);
+        } finally {
+            setUserType(undefined);
         }
     };
 
